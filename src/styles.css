@@ -1,0 +1,895 @@
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-card: #0f3460;
+  --accent: #e94560;
+  --text-primary: #eaeaea;
+  --text-secondary: #a0a0a0;
+  --success: #00d26a;
+  --failure: #ff4757;
+  --pending: #ffa502;
+  --border-radius: 12px;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-top: 40px; /* For macOS title bar */
+  -webkit-app-region: drag;
+}
+
+.app * {
+  -webkit-app-region: no-drag;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.refresh-btn {
+  background: var(--bg-card);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.refresh-btn:hover {
+  background: var(--accent);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.repo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+/* Repo Card - Clean Design */
+.repo-card {
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.2s;
+}
+
+.repo-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.repo-card--error {
+  border-color: rgba(255, 71, 87, 0.3);
+}
+
+.repo-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.repo-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.repo-card__title:hover {
+  color: var(--accent);
+}
+
+.repo-card__owner {
+  font-weight: 400;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.repo-card__error {
+  color: var(--failure);
+  font-size: 0.85rem;
+  padding: 8px;
+  background: rgba(255, 71, 87, 0.1);
+  border-radius: 6px;
+}
+
+/* Branch indicator */
+.repo-card__branch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(100, 200, 255, 0.1);
+  color: #64c8ff;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.2s;
+}
+
+.repo-card__branch:hover {
+  background: rgba(100, 200, 255, 0.2);
+}
+
+.repo-card__branch--warn {
+  background: rgba(255, 165, 2, 0.15);
+  color: var(--pending);
+}
+
+.repo-card__branch--warn:hover {
+  background: rgba(255, 165, 2, 0.25);
+}
+
+/* Stats row */
+.repo-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.repo-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.repo-stat:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.repo-stat.highlight {
+  color: var(--pending);
+}
+
+.repo-stat--image {
+  padding: 2px 4px;
+}
+
+.repo-stat--image img {
+  height: 16px;
+  border-radius: 2px;
+}
+
+/* Latest workflow */
+.repo-card__workflow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.repo-card__workflow:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.repo-card__workflow-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.repo-card__workflow-name {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.repo-card__workflow-meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.repo-card__workflow-link {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.repo-card__workflow-link:hover {
+  color: var(--accent);
+}
+
+/* Recent commits */
+.repo-card__commits {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.repo-card__commit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.repo-card__commit:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.repo-card__commit-sha {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.repo-card__commit-msg {
+  flex: 1;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.repo-card__commit-time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Status Badge */
+.status-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.status-badge.success {
+  background: rgba(0, 210, 106, 0.2);
+  color: var(--success);
+}
+
+.status-badge.failure {
+  background: rgba(255, 71, 87, 0.2);
+  color: var(--failure);
+}
+
+.status-badge.pending {
+  background: rgba(255, 165, 2, 0.2);
+  color: var(--pending);
+}
+
+.status-badge.cancelled {
+  background: rgba(160, 160, 160, 0.2);
+  color: var(--text-secondary);
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Loading & Error States */
+.loading-state, .error-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+  color: var(--text-secondary);
+}
+
+.error-state {
+  color: var(--failure);
+}
+
+.config-form {
+  background: var(--bg-secondary);
+  padding: 24px;
+  border-radius: var(--border-radius);
+  max-width: 500px;
+  width: 100%;
+}
+
+.config-form h2 {
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-group textarea {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.8rem;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.settings-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.settings-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Command Line */
+.command-line {
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.command-line-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background 0.2s;
+}
+
+.command-line-header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.command-line-header svg {
+  flex-shrink: 0;
+}
+
+.command-line-toggle {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.command-line-hint {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.command-line-content {
+  padding: 0 16px 16px;
+}
+
+.command-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.command-input-row:focus-within {
+  border-color: var(--accent);
+}
+
+.command-prompt {
+  color: var(--success);
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-weight: bold;
+}
+
+.command-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+.command-input:focus {
+  outline: none;
+}
+
+.command-input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.command-run-btn {
+  padding: 6px 16px;
+  font-size: 0.85rem;
+}
+
+.command-progress {
+  margin: 12px 0;
+}
+
+.command-progress-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.command-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.command-progress-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.command-progress-text strong {
+  color: var(--text-primary);
+}
+
+.command-results {
+  margin-top: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.command-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.btn-small {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+.command-result {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.command-result-repo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.command-result-status {
+  font-size: 0.9rem;
+}
+
+.command-result-status.success {
+  color: var(--success);
+}
+
+.command-result-status.error {
+  color: var(--failure);
+}
+
+.command-result-output {
+  margin: 0;
+  padding: 10px 12px;
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.command-result-output.stderr {
+  color: var(--pending);
+}
+
+.command-result-error {
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: var(--failure);
+}
+
+/* Dependency Dashboard */
+.dependency-dashboard {
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.dependency-dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background 0.2s;
+}
+
+.dependency-dashboard-header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dependency-dashboard-header svg {
+  flex-shrink: 0;
+  color: var(--pending);
+}
+
+.pending-count-badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(255, 165, 2, 0.2);
+  color: var(--pending);
+  font-weight: 500;
+}
+
+.dependency-dashboard-toggle {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.dependency-dashboard-content {
+  padding: 0 16px 16px;
+}
+
+.no-pending {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  padding: 8px 0;
+}
+
+.pending-approvals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.pending-approvals-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pending-approvals-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.pending-approvals-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.pending-approvals-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.pending-approval-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  transition: background 0.2s, opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.pending-approval-item:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.pending-approval-item.approved {
+  opacity: 0.6;
+  background: rgba(0, 210, 106, 0.1);
+}
+
+.pending-approval-item.approve-all {
+  background: rgba(233, 69, 96, 0.15);
+  border: 1px solid rgba(233, 69, 96, 0.3);
+}
+
+.approval-checkbox-label {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.approval-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--success);
+}
+
+.approval-checkbox:disabled {
+  cursor: not-allowed;
+}
+
+.approval-spinner {
+  position: absolute;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 165, 2, 0.3);
+  border-top-color: var(--pending);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.pending-approval-repo {
+  color: var(--accent);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+
+.pending-approval-repo:hover {
+  text-decoration: underline;
+}
+
+.pending-approval-name {
+  color: var(--text-primary);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pending-approval-name.approved {
+  text-decoration: line-through;
+  color: var(--text-secondary);
+}
+
+.pending-approval-error {
+  color: var(--failure);
+  font-weight: bold;
+  cursor: help;
+  flex-shrink: 0;
+}
+
+.pending-approval-success {
+  font-size: 0.7rem;
+  color: var(--success);
+  white-space: nowrap;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: var(--bg-secondary);
+  padding: 6px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+  flex: 1;
+  justify-content: center;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+.tab.active {
+  background: var(--accent);
+  color: white;
+}
+
+.tab svg {
+  flex-shrink: 0;
+}
+
+.tab-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-content-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.tab-content-empty svg {
+  opacity: 0.5;
+  width: 48px;
+  height: 48px;
+}
+
+/* Command Line Tab (full page version) */
+.command-line-tab {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.command-line-tab .command-input-row {
+  margin-bottom: 16px;
+}
+
+.command-line-tab .command-results {
+  flex: 1;
+  max-height: none;
+  overflow-y: auto;
+}
+
+/* Dependency Dashboard as full tab */
+.dependency-dashboard.full-tab {
+  margin-bottom: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dependency-dashboard.full-tab .dependency-dashboard-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dependency-dashboard.full-tab .pending-approvals-list {
+  max-height: none;
+  flex: 1;
+}

@@ -1,0 +1,12 @@
+{
+  "githubToken": "",
+  "refreshInterval": 60,
+  "repos": [
+    { "owner": "Jebel-Quant", "repo": "marimushka" },
+    { "owner": "Jebel-Quant", "repo": "rhiza" },
+    { "owner": "Jebel-Quant", "repo": "rhiza-cli" },
+    { "owner": "Jebel-Quant", "repo": "rhiza-manager" },
+    { "owner": "Jebel-Quant", "repo": "rhiza-tools" },
+    { "owner": "Jebel-Quant", "repo": "sync_template" }
+  ]
+}
